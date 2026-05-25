@@ -24,7 +24,7 @@ interface LabPageProps {
 }
 
 export function LabPage({ owner }: LabPageProps): JSX.Element {
-  const [taskId, setTaskId] = useState<string | null>(null);
+  //const [taskId, setTaskId] = useState<string | null>(null);
   const [taskType, setTaskType] = useState<string>("");
   const [results, setResults] = useState<RunResult[]>([]);
   const [running, setRunning] = useState<boolean>(false);
@@ -46,7 +46,7 @@ export function LabPage({ owner }: LabPageProps): JSX.Element {
 
     try {
       const task = await createTask(owner.id, type, prompt);
-      setTaskId(task.id);
+      //setTaskId(task.id);
 
       await runLabTask({
         ownerId: owner.id,
@@ -100,7 +100,7 @@ export function LabPage({ owner }: LabPageProps): JSX.Element {
   }
 
   function handleReset(): void {
-    setTaskId(null);
+    //setTaskId(null);
     setTaskType("");
     setResults([]);
     setPromoted(null);

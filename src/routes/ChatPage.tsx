@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MessageSquare, Lock, ArrowRight, Cpu } from "lucide-react";
+import { /*MessageSquare, Cpu,*/ Lock, ArrowRight } from "lucide-react";
 import {
   COLORS, PANEL, MONO_LABEL, MONO_LABEL_LOOSE, SPRING,
 } from "../lib/theme";

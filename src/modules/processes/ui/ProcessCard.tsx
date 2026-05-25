@@ -4,7 +4,7 @@ import {
   Workflow,
   Play,
   ChevronDown,
-  ChevronUp,
+  //ChevronUp,
   Trash2,
   Archive,
   AlertTriangle,
@@ -16,7 +16,7 @@ import {
   PANEL,
   MONO_LABEL,
   MONO_LABEL_LOOSE,
-  SPRING,
+  //SPRING,
   glow,
   softGlow,
 } from "../../../lib/theme";
@@ -53,7 +53,7 @@ export function ProcessCard({
   const [error, setError] = useState<string | null>(null);
 
   const isActive = process.status === "active";
-  const accentRgb = isActive ? COLORS.greenRgb : COLORS.textFaint.replace(/[^0-9,]/g, "").slice(0, -1);
+  //const accentRgb = isActive ? COLORS.greenRgb : COLORS.textFaint.replace(/[^0-9,]/g, "").slice(0, -1);
   const accent = isActive ? COLORS.green : COLORS.textMuted;
 
   async function handleRun(): Promise<void> {

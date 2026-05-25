@@ -7,8 +7,8 @@ import {
   Check,
   X,
   Shield,
-  Lock,
-  Cpu,
+  //Lock,
+  //Cpu,
   Sparkles,
   KeyRound,
   Wifi,
@@ -24,7 +24,7 @@ import {
   SPRING,
 } from "../../../lib/theme";
 import { Owner, updateOwnerName } from "../../core";
-import { getSettings, updateSettings, setApiKey } from "../../settings";
+import { /*getSettings,*/ updateSettings, setApiKey } from "../../settings";
 import {
   detectOllama,
   type OllamaStatus,

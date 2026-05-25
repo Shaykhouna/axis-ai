@@ -54,9 +54,9 @@ export function AgentEditor({
   const [vaultTopK, setVaultTopK] = useState<string>(
     String(initial?.vault_top_k ?? 5),
   );
-  const [configuredServices, setConfiguredServices] = useState<Set<string>>(
-    new Set(),
-  );
+  //const [configuredServices, setConfiguredServices] = useState<Set<string>>(
+  //  new Set(),
+  //);
   const [saving, setSaving] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [availabilityMap, setAvailabilityMap] = useState<Map<string, { available: boolean; missing: string[] }>>(new Map());
@@ -71,7 +71,7 @@ export function AgentEditor({
     ]);
     setModels(m);
     setDomains(d);
-    setConfiguredServices(s);
+    //setConfiguredServices(s);
     if (cancelled) return;
     const map = new Map<string, { available: boolean; missing: string[] }>();
     for (const model of m) {
@@ -81,7 +81,7 @@ export function AgentEditor({
     }
     if (!cancelled) setAvailabilityMap(map);
         setDomains(d);
-        setConfiguredServices(s);
+        //setConfiguredServices(s);
         if (modelId === "" && m.length > 0) {
           const firstAvailable = m.find((mm) => isModelAvailable(mm, s));
           if (firstAvailable !== undefined) setModelId(firstAvailable.id);

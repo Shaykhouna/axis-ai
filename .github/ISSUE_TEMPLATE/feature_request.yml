@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a feature or improvement
+title: "[feature] "
+labels: [feature, tester-feedback]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you want Axis-AI to do?
+      placeholder: e.g. "Show keyboard shortcuts somewhere visible"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why? What workflow does it help?
+      placeholder: e.g. "I keep forgetting Cmd-K opens the model picker"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: How much does this matter to you?
+      options:
+        - Nice to have
+        - Would use it weekly
+        - Blocking me from using Axis-AI fully

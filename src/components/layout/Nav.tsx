@@ -8,12 +8,12 @@ import {
   Settings as SettingsIcon,
   Cpu,
   ShieldQuestionMark,
-  icons,
+  //icons,
   MessageSquare,
 } from "lucide-react";
 import { JSX } from "react";
 import { motion } from "framer-motion";
-import { label } from "framer-motion/client";
+//import { label } from "framer-motion/client";
 
 const NAV_ITEMS = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },

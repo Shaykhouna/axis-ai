@@ -1,5 +1,5 @@
 import { JSX, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, /*AnimatePresence*/ } from "framer-motion";
 import { Trophy, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
 import {
   COLORS,
@@ -8,7 +8,7 @@ import {
   MONO_LABEL_LOOSE,
   SPRING,
   glow,
-  softGlow,
+  //softGlow,
 } from "../../../lib/theme";
 import type { RunResult } from "../types";
 

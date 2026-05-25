@@ -65,7 +65,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install frontend dependencies
@@ -96,3 +96,8 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') }}
           includeUpdaterJson: true
           args: --target ${{ matrix.target }}
+      
+      - name: Clean cargo cache (if needed)
+        run: cargo clean
+      - name: Build release
+        run: cargo build --release --manifest-path src-tauri/Cargo.toml

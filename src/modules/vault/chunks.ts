@@ -1,6 +1,6 @@
 import { getDb } from "../core";
 import { cosineSimilarity, embedTexts } from "./embeddings";
-import type { ChunkInput, VaultChunk, SearchResult } from "./types";
+import type { /*ChunkInput,*/ VaultChunk, SearchResult } from "./types";
 
 function generateUuid(): string {
   return crypto.randomUUID();

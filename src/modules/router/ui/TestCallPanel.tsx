@@ -40,7 +40,7 @@ export function TestCallPanel({ ownerId }: TestCallPanelProps): JSX.Element {
   const [running, setRunning] = useState<boolean>(false);
   const [result, setResult] = useState<TestResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [availabilityMap, setAvailabilityMap] = useState<Map<string, { available: boolean; missing: string[] }>>(new Map());
+  const [/*availabilityMap*/, setAvailabilityMap] = useState<Map<string, { available: boolean; missing: string[] }>>(new Map());
 
   async function refresh(): Promise<void> {
     let cancelled = false;

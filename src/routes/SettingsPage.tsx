@@ -12,9 +12,9 @@ import {
   Eye,
   EyeOff,
   Cpu,
-  Wifi,
-  WifiOff,
-  Download,
+  //Wifi,
+  //WifiOff,
+  //Download,
 } from "lucide-react";
 import {
   COLORS,
@@ -28,11 +28,11 @@ import {
 import {
   getSettings,
   updateSettings,
-  listApiKeyRefs,
+  //listApiKeyRefs,
   setApiKey,
   deleteApiKey,
   type Settings,
-  type ApiKeyRef,
+  //type ApiKeyRef,
 } from "../modules/settings";
 import { listDomains, type Owner, type Domain } from "../modules/core";
 import {
@@ -40,10 +40,10 @@ import {
   TestCallPanel,
   BalancesPanel,
   listServices,
-  detectOllama,
-  intersectInstalledWithCatalog,
-  listModels,
-  type OllamaStatus,
+  //detectOllama,
+  //intersectInstalledWithCatalog,
+  //listModels,
+  //type OllamaStatus,
   type Service,
   getConfiguredServices,
 } from "../modules/router";
@@ -77,9 +77,9 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
 
   async function loadAll(): Promise<void> {
     try {
-      const [s, refs, doms, svcs, conf] = await Promise.all([
+      const [s, /*refs,*/ doms, svcs, conf] = await Promise.all([
         getSettings(owner.id),
-        listApiKeyRefs(owner.id),
+        //listApiKeyRefs(owner.id),
         listDomains(owner.id),
         listServices(),
         getConfiguredServices(owner.id),

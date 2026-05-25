@@ -1,0 +1,47 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    {
+      "identifier": "sql:allow-execute",
+      "allow": [
+        { "db": "sqlite:axisai.db" }
+      ]
+    },
+    {
+      "identifier": "sql:allow-load",
+      "allow": [
+        { "db": "sqlite:axisai.db" }
+      ]
+    },
+    {
+      "identifier": "sql:allow-select",
+      "allow": [
+        { "db": "sqlite:axisai.db" }
+      ]
+    },
+    "sql:default",
+    "dialog:default",
+    "dialog:allow-open",
+    "fs:default",
+    "fs:allow-read-text-file",
+    "fs:allow-read-dir",
+    "fs:allow-exists",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        { "path": "$HOME/Documents/Projects/axis-ai/src/assets/**" }
+      ]
+    },
+    {
+  "identifier": "shell:allow-open",
+  "allow": [
+    { "url": "^https?://" }
+  ]
+}
+  ]
+}

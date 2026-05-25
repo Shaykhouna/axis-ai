@@ -11,6 +11,7 @@ export interface Settings {
   created_at: number;
   updated_at: number;
   default_preprocessor_model_id: string | null;
+  onboarding_completed: number;
 }
 
 export interface ApiKeyRef {

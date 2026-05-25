@@ -3,7 +3,7 @@
 
 use keyring::Entry;
 
-const SERVICE: &str = "com.shaykh.axisai";
+const SERVICE: &str = "app.xettali.tech.axisai";
 
 #[tauri::command]
 pub fn keyring_set(key: String, value: String) -> Result<(), String> {

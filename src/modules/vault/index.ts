@@ -5,6 +5,8 @@ export { syncSource } from "./sync";
 export { searchSimilar, countChunks } from "./chunks";
 export { VAULT_EMBEDDING_MODEL, VAULT_EMBEDDING_DIM } from "./embeddings";
 export { VaultPage } from "./ui/VaultPage";
+export { ensureDefaultVault } from "./defaults";
+export type { DefaultVaultResult } from "./defaults";
 export type {
   VaultSource,
   VaultChunk,

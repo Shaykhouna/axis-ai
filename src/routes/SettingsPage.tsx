@@ -48,6 +48,8 @@ import {
   getConfiguredServices,
 } from "../modules/router";
 import { OllamaPanel } from "../modules/settings/ui/SettingsLocalLLM";
+import { check } from "@tauri-apps/plugin-updater";
+import { relaunch } from "@tauri-apps/plugin-process";
 
 interface SettingsPageProps {
   owner: Owner;
@@ -55,7 +57,7 @@ interface SettingsPageProps {
 
 export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
   const [settings, setSettings] = useState<Settings | null>(null);
-  const [keyRefs, setKeyRefs] = useState<ApiKeyRef[]>([]);
+  //const [keyRefs, setKeyRefs] = useState<ApiKeyRef[]>([]);
   const [domains, setDomains] = useState<Domain[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,7 +68,12 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
   const [showKeyInput, setShowKeyInput] = useState<Record<string, boolean>>({});
   const [reveal, setReveal] = useState<Record<string, boolean>>({});
   const [services, setServices] = useState<Service[]>([]);
-  const [configuredServices, setConfiguredServices] = useState<Set<string>>(new Set());
+  const [configuredServices, setConfiguredServices] = useState<Set<string>>(
+    new Set(),
+  );
+
+  const [updateStatus, setUpdateStatus] = useState<string | null>(null);
+  const [updateChecking, setUpdateChecking] = useState(false);
 
   async function loadAll(): Promise<void> {
     try {
@@ -75,13 +82,13 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
         listApiKeyRefs(owner.id),
         listDomains(owner.id),
         listServices(),
-        getConfiguredServices(owner.id)
+        getConfiguredServices(owner.id),
       ]);
       setSettings(s);
-      setKeyRefs(refs);
+      //setKeyRefs(refs);
       setDomains(doms);
       setServices(svcs);
-      setConfiguredServices(conf)
+      setConfiguredServices(conf);
       setDomainTag(s.user_domain_tag ?? "");
       setCostCapDollars(String(s.monthly_cost_cap_cents / 100));
       setError(null);
@@ -172,6 +179,28 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
         Initialising settings…
       </div>
     );
+  }
+
+  async function handleCheckUpdates(): Promise<void> {
+    setUpdateChecking(true);
+    setUpdateStatus(null);
+    try {
+      const update = await check();
+      if (update === null) {
+        setUpdateStatus("You're on the latest version.");
+      } else {
+        setUpdateStatus(`Update available: v${update.version}. Downloading…`);
+        await update.downloadAndInstall();
+        setUpdateStatus("Update installed. Restarting…");
+        await relaunch();
+      }
+    } catch (err) {
+      setUpdateStatus(
+        `Update check failed: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    } finally {
+      setUpdateChecking(false);
+    }
   }
 
   // const configuredServices = new Set(keyRefs.map((r) => r.service));
@@ -694,6 +723,129 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
       {/* SECTION 5 — Model catalog */}
       <CatalogPanel ownerId={owner.id} />
       <TestCallPanel ownerId={owner.id} />
+
+      {/* DEV / RECOVERY: re-run the onboarding wizard */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, ...SPRING }}
+        style={{ ...PANEL, padding: "16px 18px", marginTop: "12px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                color: COLORS.textPrimary,
+                fontSize: "13px",
+                fontWeight: 500,
+              }}
+            >
+              Re-run setup
+            </div>
+            <div
+              style={{
+                color: COLORS.textFaint,
+                fontSize: "11px",
+                marginTop: "2px",
+              }}
+            >
+              Walk through the onboarding wizard again. Won't delete existing
+              data.
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={async () => {
+              await updateSettings(owner.id, { onboarding_completed: 0 });
+              window.location.reload();
+            }}
+            style={{
+              ...MONO_LABEL_LOOSE,
+              color: COLORS.textPrimary,
+              padding: "7px 14px",
+              background: "rgba(255,255,255,0.05)",
+              border: `1px solid ${COLORS.divider}`,
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            RUN AGAIN
+          </button>
+        </div>
+      </motion.div>
+
+      {/* CHECKING FOR NEW UPDATES */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, ...SPRING }}
+        style={{ ...PANEL, padding: "16px 18px", marginTop: "12px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                color: COLORS.textPrimary,
+                fontSize: "13px",
+                fontWeight: 500,
+              }}
+            >
+              Updates
+            </div>
+            <div
+              style={{
+                color: COLORS.textFaint,
+                fontSize: "11px",
+                marginTop: "2px",
+              }}
+            >
+              Axis-AI checks for updates on launch. You can also check manually.
+            </div>
+            {updateStatus !== null && (
+              <div
+                style={{
+                  color: COLORS.cyan,
+                  fontSize: "11px",
+                  marginTop: "6px",
+                }}
+              >
+                {updateStatus}
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => void handleCheckUpdates()}
+            disabled={updateChecking}
+            style={{
+              ...MONO_LABEL_LOOSE,
+              color: COLORS.cyan,
+              padding: "7px 14px",
+              background: `rgba(${COLORS.cyanRgb},0.08)`,
+              border: `1px solid rgba(${COLORS.cyanRgb},0.3)`,
+              borderRadius: "5px",
+              cursor: updateChecking ? "wait" : "pointer",
+              opacity: updateChecking ? 0.5 : 1,
+            }}
+          >
+            {updateChecking ? "CHECKING…" : "CHECK FOR UPDATES"}
+          </button>
+        </div>
+      </motion.div>
     </div>
   );
 }

@@ -6,6 +6,8 @@
   "permissions": [
     "core:default",
     "opener:default",
+    "updater:default",
+    "process:default",
     {
       "identifier": "sql:allow-execute",
       "allow": [
@@ -28,13 +30,16 @@
     "dialog:default",
     "dialog:allow-open",
     "fs:default",
+    "fs:allow-mkdir",
+    "fs:allow-write-text-file",
     "fs:allow-read-text-file",
     "fs:allow-read-dir",
     "fs:allow-exists",
     {
       "identifier": "fs:scope",
       "allow": [
-        { "path": "$HOME/Documents/Projects/axis-ai/src/assets/**" }
+        { "path": "$DOCUMENT/AxisAI-Vault" },
+        { "path": "$DOCUMENT/AxisAI-Vault/**" }
       ]
     },
     {

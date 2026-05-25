@@ -36,7 +36,8 @@ const PATCHABLE_FIELDS = new Set<keyof Settings>([
   "model_catalog_url",
   "model_catalog_last_synced_at",
   "user_domain_tag",
-  "default_preprocessor_model_id"
+  "default_preprocessor_model_id",
+  "onboarding_completed",
 ]);
 
 export async function updateSettings(

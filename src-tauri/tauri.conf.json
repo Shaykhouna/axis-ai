@@ -2,7 +2,7 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Axis-Ai",
   "version": "0.1.0",
-  "identifier": "com.shaykh.axisai",
+  "identifier": "app.xettali.tech.axisai",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -36,6 +36,16 @@
     ]
   },
   "plugins": {
-    "sql": { "preload": [] }
+    "sql": { "preload": [] },
+    "updater": {
+      "endpoints": [
+        "https://github.com/Shaykhouna/axis-ai/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEU0NEVBRTc2QjRENDQ5REYKUldUZlNkUzBkcTVPNUJpa3pUcVI1Slp3OTA3aFN0QXJBMHpxZFk1dVJSSUtLLzBmT1p6UGhaeVgK",
+      "windows": {
+        "installMode": "passive"
+      },
+      "dialog": true
+    }
   }
 }

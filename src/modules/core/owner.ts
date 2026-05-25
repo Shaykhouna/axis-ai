@@ -12,26 +12,26 @@ export async function provisionOwner(): Promise<Owner> {
   try {
     const db = await getDb();
 
-  const existing = await db.select<Owner[]>(
-    "SELECT * FROM owners WHERE is_local_owner = 1 LIMIT 1"
-  );
-  if (existing.length > 0) {
-    return existing[0];
-  }
+    const existing = await db.select<Owner[]>(
+      "SELECT * FROM owners WHERE is_local_owner = 1 LIMIT 1"
+    );
+    if (existing.length > 0) {
+      return existing[0];
+    }
 
-  const id = generateUuid();
-  await db.execute(
-    "INSERT INTO owners (id, display_name, is_local_owner) VALUES (?, ?, 1)",
-    [id, "me"]
-  );
+    const id = generateUuid();
+    await db.execute(
+      "INSERT INTO owners (id, display_name, is_local_owner) VALUES (?, ?, 1)",
+      [id, "me"]
+    );
 
-  await seedDefaultDomains(id);
+    await seedDefaultDomains(id);
 
-  const created = await db.select<Owner[]>(
-    "SELECT * FROM owners WHERE id = ?",
-    [id]
-  );
-  return created[0];
+    const created = await db.select<Owner[]>(
+      "SELECT * FROM owners WHERE id = ?",
+      [id]
+    );
+    return created[0];
   } catch (error) {
     console.error("Error provisioning owner:", error);
     throw error;
@@ -49,6 +49,30 @@ async function seedDefaultDomains(ownerId: string): Promise<void> {
     }
   } catch (error) {
     console.error("Error seeding default domains:", error);
+    throw error;
+  }
+}
+
+export async function updateOwnerName(
+  ownerId: string,
+  displayName: string
+): Promise<Owner> {
+  try {
+    const db = await getDb();
+    await db.execute(
+      "UPDATE owners SET display_name = ? WHERE id = ?",
+      [displayName, ownerId]
+    );
+    const rows = await db.select<Owner[]>(
+      "SELECT * FROM owners WHERE id = ? LIMIT 1",
+      [ownerId]
+    );
+    if (rows.length === 0) {
+      throw new Error(`Owner ${ownerId} not found`);
+    }
+    return rows[0];
+  } catch (error) {
+    console.error("Error updating owner name:", error);
     throw error;
   }
 }

@@ -11,7 +11,8 @@ import { AgentsPage } from "./modules/agents";
 import { LabPage } from "./modules/lab";
 import { ProcessesPage } from "./modules/processes";
 import { ChatPage } from "./routes/ChatPage"
-import { MessageSquare } from "lucide-react"
+//import { MessageSquare } from "lucide-react"
+import { OnboardingGate } from "./modules/onboarding"
 
 export default function App(): JSX.Element {
   const [owner, setOwner] = useState<Owner | null>(null);
@@ -81,6 +82,7 @@ export default function App(): JSX.Element {
 
   return (
     <BrowserRouter>
+      <OnboardingGate owner={owner}>
       <Layout ownerName={owner.display_name}>
         <Routes>
           <Route path="/" element={<Dashboard owner={owner} />} />
@@ -90,10 +92,11 @@ export default function App(): JSX.Element {
           <Route path="/vault" element={<VaultPage owner={owner} />} />
           <Route path="/settings" element={<SettingsPage owner={owner}/>} />
           <Route path="/coming-soon" element={<ComingSoon module="Coming Soon" />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/chat" element={<ChatPage owner={owner}/>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
+      </OnboardingGate>
     </BrowserRouter>
   );
 }

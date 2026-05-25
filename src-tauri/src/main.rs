@@ -65,9 +65,17 @@ fn main() {
             sql: include_str!("../migrations/008_chat_init.sql"),
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 9,
+            description: "onboarding",
+            sql: include_str!("../migrations/009_onboarding.sql"),
+            kind: MigrationKind::Up,
+        },
     ];
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())

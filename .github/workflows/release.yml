@@ -91,8 +91,3 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') }}
           includeUpdaterJson: true
           args: --target ${{ matrix.target }}
-      
-      - name: Clean cargo cache (if needed)
-        run: cargo clean
-      - name: Build release
-        run: cargo build --release --manifest-path src-tauri/Cargo.toml

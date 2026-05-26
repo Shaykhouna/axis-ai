@@ -56,6 +56,32 @@ jobs:
             libssl-dev \
             libxdo-dev \
             libayatana-appindicator3-dev
+      
+      - name: Debug GTK install
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          echo "=== libgtk-3-dev installed? ==="
+          dpkg -l libgtk-3-dev 2>&1 | tail -5
+          echo ""
+          echo "=== Where is gdk-3.0.pc? ==="
+          find / -name "gdk-3.0.pc" 2>/dev/null
+          echo ""
+          echo "=== Default pkg-config search dirs ==="
+          pkg-config --variable pc_path pkg-config
+          echo ""
+          echo "=== Can pkg-config find gdk-3.0? ==="
+          pkg-config --exists gdk-3.0 && echo "YES" || echo "NO"
+          echo ""
+          echo "=== If yes, version ==="
+          pkg-config --modversion gdk-3.0 || true
+          echo ""
+          echo "=== PKG_CONFIG_PATH env ==="
+          echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
+
+      - name: Set pkg-config path (linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig:/usr/lib/pkgconfig" >> $GITHUB_ENV
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -66,7 +92,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
-          prefix-key: "v2"
+          save-if: false
 
       - name: Setup Node
         uses: actions/setup-node@v4

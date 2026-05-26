@@ -45,7 +45,7 @@
     {
       "identifier": "shell:allow-open",
       "allow": [
-        { "url": "^https?://" }
+        { "name": "url", "cmd": "open", "args": false }
       ]
     }
   ]

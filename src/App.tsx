@@ -13,6 +13,7 @@ import { ProcessesPage } from "./modules/processes";
 import { ChatPage } from "./routes/ChatPage"
 //import { MessageSquare } from "lucide-react"
 import { OnboardingGate } from "./modules/onboarding"
+import { FeedbackButton } from "./modules/diagnostics"
 
 export default function App(): JSX.Element {
   const [owner, setOwner] = useState<Owner | null>(null);
@@ -96,6 +97,7 @@ export default function App(): JSX.Element {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
+      <FeedbackButton owner={owner}/>
       </OnboardingGate>
     </BrowserRouter>
   );

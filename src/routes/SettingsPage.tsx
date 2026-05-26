@@ -50,6 +50,7 @@ import {
 import { OllamaPanel } from "../modules/settings/ui/SettingsLocalLLM";
 import { check } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
+import { DiagnosticsPanel, NetworkPanel } from "../modules/diagnostics"
 
 interface SettingsPageProps {
   owner: Owner;
@@ -846,6 +847,9 @@ export function SettingsPage({ owner }: SettingsPageProps): JSX.Element {
           </button>
         </div>
       </motion.div>
+
+      <DiagnosticsPanel owner={owner}/>
+      <NetworkPanel owner={owner}/>
     </div>
   );
 }

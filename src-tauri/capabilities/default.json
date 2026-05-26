@@ -8,6 +8,7 @@
     "opener:default",
     "updater:default",
     "process:default",
+    "os:default",
     {
       "identifier": "sql:allow-execute",
       "allow": [

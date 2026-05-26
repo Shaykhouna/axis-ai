@@ -1,6 +1,6 @@
 [package]
 name = "axis-ai"
-version = "0.1.1"
+version = "0.1.2"
 description = "Axis-AI — personal R&D for AI workflows"
 authors = ["shaykh"]
 edition = "2021"

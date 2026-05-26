@@ -42,6 +42,11 @@
         { "path": "$DOCUMENT/AxisAI-Vault/**" }
       ]
     },
-    "opener:allow-open-url"
+    {
+      "identifier": "shell:allow-open",
+      "allow": [
+        { "url": "^https?://" }
+      ]
+    }
   ]
 }
